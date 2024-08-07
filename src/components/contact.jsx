@@ -7,34 +7,40 @@ const initialState = {
   email: "",
   message: "",
 };
+
 export const Contact = (props) => {
   const [{ name, email, message }, setState] = useState(initialState);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
+
   const clearState = () => setState({ ...initialState });
-  
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(name, email, message);
-    
-    {/* replace below with your own Service ID, Template ID and Public Key from your EmailJS account */ }
-    
+
     emailjs
-      .sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", e.target, "YOUR_PUBLIC_KEY")
+      .sendForm("service_zox2ole", "template_5l6ksyj", e.target, "54fektXVderYmBrkk")
       .then(
         (result) => {
           console.log(result.text);
+          setSuccessMessage("Your message has been sent successfully!");
+          setErrorMessage("");
           clearState();
         },
         (error) => {
           console.log(error.text);
+          setErrorMessage("Failed to send message. Please try again.");
+          setSuccessMessage("");
         }
       );
   };
+
   return (
     <div>
       <div id="contact">
@@ -45,10 +51,10 @@ export const Contact = (props) => {
                 <h2>Get In Touch</h2>
                 <p>
                   Please fill out the form below to send us an email and we will
-                  get back to you as soon as possible.
+                  get back to you.
                 </p>
               </div>
-              <form name="sentMessage" validate onSubmit={handleSubmit}>
+              <form name="sentMessage" onSubmit={handleSubmit} noValidate>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
@@ -59,6 +65,7 @@ export const Contact = (props) => {
                         className="form-control"
                         placeholder="Name"
                         required
+                        value={name}
                         onChange={handleChange}
                       />
                       <p className="help-block text-danger"></p>
@@ -73,6 +80,7 @@ export const Contact = (props) => {
                         className="form-control"
                         placeholder="Email"
                         required
+                        value={email}
                         onChange={handleChange}
                       />
                       <p className="help-block text-danger"></p>
@@ -87,11 +95,15 @@ export const Contact = (props) => {
                     rows="4"
                     placeholder="Message"
                     required
+                    value={message}
                     onChange={handleChange}
                   ></textarea>
                   <p className="help-block text-danger"></p>
                 </div>
-                <div id="success"></div>
+                <div id="success">
+                  {successMessage && <p className="text-success">{successMessage}</p>}
+                  {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                </div>
                 <button type="submit" className="btn btn-custom btn-lg">
                   Send Message
                 </button>
@@ -101,12 +113,6 @@ export const Contact = (props) => {
           <div className="col-md-3 col-md-offset-1 contact-info">
             <div className="contact-item">
               <h3>Contact Info</h3>
-              <p>
-                <span>
-                  <i className="fa fa-map-marker"></i> Address
-                </span>
-                {props.data ? props.data.address : "loading"}
-              </p>
             </div>
             <div className="contact-item">
               <p>
@@ -151,14 +157,7 @@ export const Contact = (props) => {
         </div>
       </div>
       <div id="footer">
-        <div className="container text-center">
-          <p>
-            &copy; 2023 Issaaf Kattan React Land Page Template. Design by{" "}
-            <a href="http://www.templatewire.com" rel="nofollow">
-              TemplateWire
-            </a>
-          </p>
-        </div>
+        <div className="container text-center"></div>
       </div>
     </div>
   );

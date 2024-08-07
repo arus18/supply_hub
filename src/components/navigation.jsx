@@ -18,7 +18,7 @@ export const Navigation = (props) => {
             <span className="icon-bar"></span>{" "}
           </button>
           <a className="navbar-brand page-scroll" href="#page-top">
-            React Landing Page
+            <img src="/img/logo.png" alt="Brand Logo" style={{ maxHeight: "50px" }} /> 
           </a>{" "}
         </div>
 
@@ -27,6 +27,22 @@ export const Navigation = (props) => {
           id="bs-example-navbar-collapse-1"
         >
           <ul className="nav navbar-nav navbar-right">
+          <li>
+              <a href="#process" className="page-scroll">
+                Order Process
+              </a>
+            </li>
+          <li>
+              <a href="#services" className="page-scroll">
+                Features
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="page-scroll">
+                Contact
+              </a>
+            </li>
+            {/* 
             <li>
               <a href="#features" className="page-scroll">
                 Features
@@ -62,6 +78,7 @@ export const Navigation = (props) => {
                 Contact
               </a>
             </li>
+            */}
           </ul>
         </div>
       </div>
